@@ -1,0 +1,39 @@
+---
+layout: default
+title: 关于
+permalink: /about.html
+---
+
+<article class="about-page container">
+  <h1>关于本站</h1>
+  <p>这是我的个人学习记录站点，用来保存学习过程中的笔记、心得和参考资料，方便随时浏览和回顾。</p>
+
+  <h2>如何添加新笔记</h2>
+  <p>在仓库的 <code>_posts/</code> 目录下创建 Markdown 文件，命名格式为：</p>
+  <pre><code>YYYY-MM-DD-标题.md</code></pre>
+  <p>文件开头需要包含以下信息（Front Matter）：</p>
+  <pre><code>---
+layout: post
+title: 笔记标题
+date: 2026-07-11
+category: 编程
+tags: [Git, GitHub]
+---
+
+这里是笔记正文，支持 **Markdown** 语法。</code></pre>
+
+  <h2>部署到 GitHub Pages</h2>
+  <ol>
+    <li>在 GitHub 上创建仓库（推荐命名为 <code>你的用户名.github.io</code>）</li>
+    <li>将本仓库代码推送到 GitHub</li>
+    <li>进入仓库 <strong>Settings → Pages</strong></li>
+    <li>Source 选择 <strong>Deploy from a branch</strong>，Branch 选 <code>main</code>，文件夹选 <code>/ (root)</code></li>
+    <li>等待几分钟，访问 <code>https://你的用户名.github.io</code></li>
+  </ol>
+
+  <h2>本地预览</h2>
+  <p>安装 Ruby 和 Bundler 后，在项目目录运行：</p>
+  <pre><code>bundle install
+bundle exec jekyll serve</code></pre>
+  <p>然后打开 <code>http://localhost:4000</code> 预览。</p>
+</article>

@@ -1,0 +1,71 @@
+---
+layout: default
+title: 首页
+---
+
+<section class="hero">
+  <h1>我的学习记录</h1>
+  <p>记录每一次学习的收获与思考，沉淀知识，方便随时回顾</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">{{ site.posts.size }}</span>
+      <span class="stat-label">篇笔记</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">{{ site.category_list.size }}</span>
+      <span class="stat-label">个分类</span>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="搜索笔记标题、内容或标签..." autocomplete="off">
+  </div>
+
+  <div class="categories">
+    <button class="category-btn active" data-category="all">全部</button>
+    {% for cat in site.category_list %}
+    <button class="category-btn" data-category="{{ cat }}">{{ cat }}</button>
+    {% endfor %}
+  </div>
+
+  <div class="notes-grid">
+    {% for post in site.posts limit: 6 %}
+    <a href="{{ post.url | relative_url }}" class="note-card"
+       data-title="{{ post.title }}"
+       data-excerpt="{{ post.excerpt | strip_html }}"
+       data-tags="{{ post.tags | join: ',' }}"
+       data-category="{{ post.category }}">
+      <div class="note-card-header">
+        <time class="note-date">{{ post.date | date: "%Y-%m-%d" }}</time>
+        {% if post.category %}
+        <span class="note-category">{{ post.category }}</span>
+        {% endif %}
+      </div>
+      <h2>{{ post.title }}</h2>
+      <p>{{ post.excerpt | strip_html | truncate: 100 }}</p>
+      {% if post.tags %}
+      <div class="note-tags">
+        {% for tag in post.tags %}
+        <span class="tag">#{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </a>
+    {% endfor %}
+  </div>
+
+  {% if site.posts.size > 6 %}
+  <div style="text-align: center; margin-top: 40px;">
+    <a href="{{ '/notes.html' | relative_url }}" style="font-weight: 500;">查看全部笔记 →</a>
+  </div>
+  {% endif %}
+
+  {% if site.posts.size == 0 %}
+  <div class="empty-state">
+    <div class="emoji">📝</div>
+    <p>还没有笔记，在 <code>_posts/</code> 目录下创建 Markdown 文件即可开始记录</p>
+  </div>
+  {% endif %}
+</div>

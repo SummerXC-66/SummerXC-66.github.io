@@ -1,0 +1,56 @@
+---
+layout: default
+title: 全部笔记
+permalink: /notes.html
+---
+
+<div class="container">
+  <section class="hero" style="padding-top: 20px;">
+    <h1 style="font-size: 1.8rem;">全部笔记</h1>
+    <p>浏览所有学习记录</p>
+  </section>
+
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="搜索笔记..." autocomplete="off">
+  </div>
+
+  <div class="categories">
+    <button class="category-btn active" data-category="all">全部</button>
+    {% for cat in site.category_list %}
+    <button class="category-btn" data-category="{{ cat }}">{{ cat }}</button>
+    {% endfor %}
+  </div>
+
+  <div class="notes-grid">
+    {% for post in site.posts %}
+    <a href="{{ post.url | relative_url }}" class="note-card"
+       data-title="{{ post.title }}"
+       data-excerpt="{{ post.excerpt | strip_html }}"
+       data-tags="{{ post.tags | join: ',' }}"
+       data-category="{{ post.category }}">
+      <div class="note-card-header">
+        <time class="note-date">{{ post.date | date: "%Y-%m-%d" }}</time>
+        {% if post.category %}
+        <span class="note-category">{{ post.category }}</span>
+        {% endif %}
+      </div>
+      <h2>{{ post.title }}</h2>
+      <p>{{ post.excerpt | strip_html | truncate: 120 }}</p>
+      {% if post.tags %}
+      <div class="note-tags">
+        {% for tag in post.tags %}
+        <span class="tag">#{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </a>
+    {% endfor %}
+  </div>
+
+  {% if site.posts.size == 0 %}
+  <div class="empty-state">
+    <div class="emoji">📝</div>
+    <p>暂无笔记</p>
+  </div>
+  {% endif %}
+</div>
