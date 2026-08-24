@@ -3,10 +3,10 @@ layout: post
 title: Ubuntu 环境配置与踩坑记录
 date: 2026-08-24
 category: 工具
-tags: [Ubuntu, CUDA, cuDNN, TensorRT, 驱动]
+tags: [Ubuntu, CUDA, cuDNN, TensorRT, 驱动, Nginx, Gunicorn, Flask]
 ---
 
-Windows + Ubuntu 双系统下的环境配置笔记，侧重 Ubuntu 20.04：无线网、显卡、CUDA / cuDNN / TensorRT，以及若干日常问题。
+Windows + Ubuntu 双系统下的环境配置笔记，侧重 Ubuntu 20.04：无线网、显卡、CUDA / cuDNN / TensorRT，以及 Flask 服务部署等日常问题。
 
 > 另有一条标题备忘：【tf-trt 环境配置】tensorflow + cuda + cudnn + tensorrt 安装记录。
 
@@ -329,3 +329,56 @@ kill -9 <PID>
 | `> xxx.log` | 标准输出写入日志 |
 | `2>&1` | 标准错误也重定向到同一日志 |
 | 末尾 `&` | 后台运行 |
+
+## 二十四、关掉某个端口
+
+```bash
+sudo ufw deny 8888
+```
+
+## 二十五、用 Gunicorn 和 Nginx 部署 Flask
+
+环境曾是 Ubuntu 22.04 + Python 3.10。公网地址用占位符。
+
+```bash
+sudo pip3 install gunicorn
+sudo apt install nginx
+```
+
+检查主配置 `/etc/nginx/nginx.conf`，站点写在 `/etc/nginx/conf.d/default.conf`：
+
+```nginx
+server {
+    listen 80;
+    server_name YOUR_SERVER_IP;  # HOST 的外网域名或 IP
+    location / {
+        proxy_pass http://127.0.0.1:6666;  # 指向 gunicorn
+    }
+}
+```
+
+原笔记里 `proxy_pass` 写成了 `http://0.0.0.0:6666`。反向代理一般指向本机回环地址即可。
+
+启动 Gunicorn（原命令少了一个 `>`，下面已补上）：
+
+```bash
+nohup gunicorn -w 2 -b 0.0.0.0:6666 manage:app > 2023.10.21.log 2>&1 &
+```
+
+`-w 2` 是 2 个 worker，入口是 `manage:app`。
+
+```bash
+sudo systemctl start nginx
+sudo systemctl restart nginx
+sudo systemctl stop nginx
+```
+
+### Meinheld / 协程 worker
+
+Python 3.9 之后 `collections.Iterable` 被移到 `collections.abc`。老包（含部分 Meinheld 依赖）会因此报错。
+
+Meinheld 要求 Python 2.6+ 或 3.5+，以及 `greenlet >= 0.4.5`。
+
+参考：[Flask + Gunicorn（协程）高并发](https://www.cnblogs.com/lixueren-wy/articles/16914830.html)。
+
+给 `pydensecrf` 等包编译时要用较新 Cython，见 [Cython 入门与计算加速](/notes/2026/08/24/cython-notes/)。

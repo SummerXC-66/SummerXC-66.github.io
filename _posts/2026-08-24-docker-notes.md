@@ -3,10 +3,10 @@ layout: post
 title: Docker 常用命令与踩坑记录
 date: 2026-08-24
 category: 工具
-tags: [Docker, 容器, PyTorch, WSL2]
+tags: [Docker, 容器, PyTorch, WSL2, Samba, pip]
 ---
 
-Windows 安装 Docker 踩坑记录：把 Python 环境跑在容器里实现多版本并存，并用作 PyCharm 的解释器。
+Windows 安装 Docker 踩坑记录：把 Python 环境跑在容器里实现多版本并存，并用作 PyCharm 的解释器。后半段补了内网 Samba 共享、局域网 pip 镜像和 TensorFlow Jupyter 容器。
 
 ## 一、参考资料
 
@@ -120,3 +120,73 @@ unrar x -r filename.rar ~/Path
 - `x`：保留原先全部路径
 - `-r`：递归解压子目录
 - `e`：全部文件解压到同一文件夹，不保留 rar 中的路径
+
+## 八、内网 Samba 共享容器
+
+整理自 2021 年内网服务器笔记（李毅 / 夏川）。默认按 **192.168.8.*** 网段；路由器不改网段时，要改镜像里的 `/etc/samba/smb.conf`。
+
+机器上还没装 Docker 时：
+
+```bash
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bk
+sudo sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
+sudo apt-get update
+wget -qO- https://get.docker.com/ | sh
+sudo service docker start
+```
+
+拉起共享：
+
+```bash
+sudo mkdir -p /home/share_dir/external
+sudo mkdir -p /home/share_dir/internal
+sudo chmod 777 /home/share_dir -R
+docker run --name samba -p 445:445 -v /home/share_dir:/share gdyshi/samba
+```
+
+| 共享 | 谁能用 | 用途 | 权限 |
+|------|--------|------|------|
+| `file_send` | 局域网外电脑 | 外网文件拷进服务器 | 读写 |
+| `file_recv` | 局域网内电脑 | 再拷到内网电脑 | 只读 |
+| `internal` | 局域网内电脑 | 内网互拷 | — |
+
+Windows 上 `Win + R`，打开 `\\服务器IP`。主机上若已有系统 Samba，先卸掉再 `sudo docker restart samba`，避免抢 445：
+
+```bash
+sudo apt-get --purge remove samba samba-common
+sudo docker restart samba
+```
+
+路由器 LAN / DHCP 改到 `192.168.8.*` 后重启服务器，再执行一次 `sudo docker restart samba`。日常：`docker ps`、`sudo netstat -tunpl | grep 445`、`ifconfig`。
+
+## 九、局域网 pip 镜像
+
+```bash
+sudo mkdir /home/pipmirror
+docker run --name pip-source -p 8083:80 -v /home/pipmirror:/srv/pypi gdyshi/pip-source
+```
+
+更新包（耗时长，可晚上跑）：
+
+```bash
+docker exec -it pip-source bash
+python /bandersnatch/src/runner.py 3600
+```
+
+客户端：
+
+```ini
+[global]
+extra-index-url = http://SERVER_IP:8083/simple/
+```
+
+Linux 写 `~/.pip/pip.conf`，Windows 写 `%APPDATA%/pip/pip.ini`（没有就新建）。公网源对照见 [Ubuntu 环境配置](/notes/2026/08/24/ubuntu-setup/) 第二十一节。
+
+## 十、TensorFlow Jupyter 容器
+
+参考：[TensorFlow 安装](https://www.tensorflow.org/install?hl=zh-cn)
+
+```bash
+docker pull tensorflow/tensorflow:latest
+docker run -it -p 8888:8888 tensorflow/tensorflow:latest-jupyter
+```

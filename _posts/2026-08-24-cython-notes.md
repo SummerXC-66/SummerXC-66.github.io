@@ -126,3 +126,14 @@ def foo(M):
 | 计算遇到瓶颈 | 再考虑 Cython，或封装 C 模块 |
 
 不要到处套 Cython。先把逻辑写对，瓶颈出现再优化。
+
+## 五、给 pydensecrf 等包编译
+
+部分科学计算包（例如 `pydensecrf`）要用较新 Cython，否则扩展编不过：
+
+```bash
+pip install "cython>=0.22"
+pip install pydensecrf
+```
+
+这和 Meinheld / Gunicorn 那条线上的依赖踩坑是同一类问题：先把 Cython 升上去，再装需要编译的包。

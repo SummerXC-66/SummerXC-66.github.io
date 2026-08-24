@@ -3,7 +3,7 @@ layout: post
 title: Python Socket 与异步 IO 笔记
 date: 2026-08-24
 category: 编程
-tags: [Python, Socket, asyncio, epoll]
+tags: [Python, Socket, asyncio, epoll, 粘包]
 ---
 
 整理端口、Socket、asyncio / aiohttp，以及多客户端服务端相关笔记与资料。
@@ -119,3 +119,34 @@ server.serve_forever()  # 持续处理请求直到 shutdown
 
 - [「NAS」我的搭建 NAS 全过程（知乎）](https://www.zhihu.com)
 - 单线程同时监听多个端口（Windows / C++，CSDN）
+
+## 七、粘包与丢包
+
+Socket 缓冲区是字节流，先进先出，发送和取出都可以自定义大小。
+
+- 缓冲区没取完，数据会堆在里面。
+- `recv(1024)` 只表示**最多**取 1024 字节，实际长度不确定，可能读半包。
+- 连续发两条，底层也可能拼成一次发送，对端一次 `recv` 就粘在一起。
+
+所以会同时遇到**丢包**（没取干净或取少了）和**粘包**（多条粘成一条）。
+
+处理思路：
+
+1. **发送间隔**：两条之间停一下，例如 `time.sleep(0.5)`。只适合不追求吞吐的调试。
+2. **确认重传**：发完等对端确认，确认后再发下一条，否则重发。
+3. **减小单次收发**：buffer 越小，一次粘多条的概率越低。实践里常见 `1024`～`10240`。
+
+更稳的做法是自己定帧：长度前缀或分隔符，接收端按协议拼包，而不是依赖「一次 recv 刚好一条」。
+
+## 八、设备侧联网（Cam / 嵌入式）
+
+采集设备连热点、再把数据推到服务器时，大致是这类字段（密码和 IP 用占位符）：
+
+```c
+const char *ssid = "YOUR_WIFI_SSID";
+const char *password = "YOUR_WIFI_PASSWORD";
+const char *host = "YOUR_SERVER_IP";
+const int port = 8888;
+```
+
+端口暂时不用时，服务器上可 `sudo ufw deny 8888`。音频采集侧的 Python 读波形见 [Chirp 与语谱图](/notes/2026/08/24/eeg-chirp-specgram/)。

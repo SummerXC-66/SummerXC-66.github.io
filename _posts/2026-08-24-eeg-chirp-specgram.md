@@ -3,10 +3,10 @@ layout: post
 title: Chirp 信号与语谱图（specgram）示例
 date: 2026-08-24
 category: 算法
-tags: [EEG, 信号处理, MATLAB, Chirp]
+tags: [EEG, 信号处理, MATLAB, Chirp, librosa]
 ---
 
-用 MATLAB 生成一段 Chirp 扫频信号，并画出时域波形与语谱图（`specgram`）。采样点数 `N=1024`，采样率 `fs=1000` Hz。
+用 MATLAB 生成一段 Chirp 扫频信号，并画出时域波形与语谱图（`specgram`）。采样点数 `N=1024`，采样率 `fs=1000` Hz。后半段补了 Python 侧用 librosa / soundfile 读音频、重采样，来自学习空间「Cam开发」。
 
 ## 代码
 
@@ -46,3 +46,21 @@ xlabel('Time (second)');
 | `imagesc` + `axis xy` | 下图：语谱图，纵轴频率向上增大 |
 
 上图看 Chirp 的时域振荡，下图看频率随时间升高的扫频轨迹。
+
+## Python：librosa 读音频
+
+Cam / 采集链路里用 Python 读波形时：
+
+参考：[librosa IO formats](https://librosa.org/doc/latest/ioformats.html#read-file-like-objects)
+
+```python
+import librosa
+import soundfile as sf
+
+filename = librosa.ex("trumpet")
+data, samplerate = sf.read(filename, dtype="float32")
+data = data.T
+data_22k = librosa.resample(data, orig_sr=samplerate, target_sr=22050)
+```
+
+大文件可按块读（Blockwise Reading），避免一次载入整段波形。设备把音频推到服务器的 Socket 字段见 [Python Socket 与异步 IO](/notes/2026/08/24/python-socket-asyncio/)。
