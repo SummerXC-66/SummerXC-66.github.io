@@ -6,7 +6,7 @@ category: 算法
 tags: [EEG, 信号处理, MATLAB, Chirp, librosa]
 ---
 
-用 MATLAB 生成一段 Chirp 扫频信号，并画出时域波形与语谱图（`specgram`）。采样点数 `N=1024`，采样率 `fs=1000` Hz。后半段补了 Python 侧用 librosa / soundfile 读音频、重采样，来自学习空间「Cam开发」。
+用 MATLAB 生成 Chirp 扫频并画语谱图；后面是 Python 用 librosa / soundfile 读音频、重采样。采样点数 `N=1024`，采样率 `fs=1000` Hz。
 
 ## 代码
 
@@ -63,4 +63,4 @@ data = data.T
 data_22k = librosa.resample(data, orig_sr=samplerate, target_sr=22050)
 ```
 
-大文件可按块读（Blockwise Reading），避免一次载入整段波形。设备把音频推到服务器的 Socket 字段见 [Python Socket 与异步 IO](/notes/2026/08/24/python-socket-asyncio/)。
+大文件可按块读（Blockwise Reading），避免一次载入整段波形。

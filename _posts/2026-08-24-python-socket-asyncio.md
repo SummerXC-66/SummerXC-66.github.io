@@ -149,4 +149,4 @@ const char *host = "YOUR_SERVER_IP";
 const int port = 8888;
 ```
 
-端口暂时不用时，服务器上可 `sudo ufw deny 8888`。音频采集侧的 Python 读波形见 [Chirp 与语谱图](/notes/2026/08/24/eeg-chirp-specgram/)。
+端口暂时不用：`sudo ufw deny 8888`。

@@ -135,5 +135,3 @@ def foo(M):
 pip install "cython>=0.22"
 pip install pydensecrf
 ```
-
-这和 Meinheld / Gunicorn 那条线上的依赖踩坑是同一类问题：先把 Cython 升上去，再装需要编译的包。

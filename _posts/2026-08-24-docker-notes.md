@@ -6,7 +6,7 @@ category: 工具
 tags: [Docker, 容器, PyTorch, WSL2, Samba, pip]
 ---
 
-Windows 安装 Docker 踩坑记录：把 Python 环境跑在容器里实现多版本并存，并用作 PyCharm 的解释器。后半段补了内网 Samba 共享、局域网 pip 镜像和 TensorFlow Jupyter 容器。
+Windows / Ubuntu 上用 Docker 跑多版本 Python、PyTorch GPU 容器，以及内网 Samba、pip 镜像。
 
 ## 一、参考资料
 
@@ -86,6 +86,13 @@ dpkg -l | grep cudnn
 ```bash
 docker cp E:\OCR\ocr-xc 3541ad0c6678:/home
 ```
+
+资料：
+
+- [deep_thought B 站](https://space.bilibili.com/373596439/video?tid=0&pn=1&keyword=&order=pubdate)
+- [PyTorch 1.10 文档](https://pytorch.org/docs/1.10/)
+- [两万字 PyTorch 入门](https://mp.weixin.qq.com/s/SB1nCTjpapw8lQr-aRFdeA)
+- [GPU 多卡并行训练](https://mp.weixin.qq.com/s/fCpNX_ErXceczb_SkNiXZA)
 
 ## 五、docker-compose
 
@@ -180,7 +187,7 @@ python /bandersnatch/src/runner.py 3600
 extra-index-url = http://SERVER_IP:8083/simple/
 ```
 
-Linux 写 `~/.pip/pip.conf`，Windows 写 `%APPDATA%/pip/pip.ini`（没有就新建）。公网源对照见 [Ubuntu 环境配置](/notes/2026/08/24/ubuntu-setup/) 第二十一节。
+Linux 写 `~/.pip/pip.conf`，Windows 写 `%APPDATA%/pip/pip.ini`（没有就新建）。公网也可用清华 `https://pypi.tuna.tsinghua.edu.cn/simple/` 或阿里云 `https://mirrors.aliyun.com/pypi/simple/`。
 
 ## 十、TensorFlow Jupyter 容器
 
