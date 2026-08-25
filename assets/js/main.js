@@ -26,18 +26,30 @@
     const query = (searchInput?.value || "").toLowerCase().trim();
     const activeCategory = document.querySelector(".category-btn.active");
     const category = activeCategory?.dataset.category || "all";
+    const homePreview = category === "all" && !query;
+    let visible = 0;
 
     noteCards.forEach(function (card) {
       const title = (card.dataset.title || "").toLowerCase();
       const excerpt = (card.dataset.excerpt || "").toLowerCase();
       const tags = (card.dataset.tags || "").toLowerCase();
       const cardCategory = card.dataset.category || "";
+      const recentOnly = card.dataset.recent === "0";
 
       const matchSearch = !query || title.includes(query) || excerpt.includes(query) || tags.includes(query);
       const matchCategory = category === "all" || cardCategory === category;
+      const matchRecent = !homePreview || !recentOnly;
+      const show = matchSearch && matchCategory && matchRecent;
 
-      card.style.display = matchSearch && matchCategory ? "" : "none";
+      card.style.display = show ? "" : "none";
+      if (show) visible += 1;
     });
+
+    const empty = document.getElementById("filterEmpty");
+    if (empty) empty.hidden = visible > 0;
+
+    const viewAll = document.getElementById("viewAllNotes");
+    if (viewAll) viewAll.style.display = homePreview ? "" : "none";
   }
 
   if (searchInput) {
@@ -51,4 +63,18 @@
       filterNotes();
     });
   });
+
+  document.querySelectorAll(".note-tags .tag").forEach(function (tag) {
+    tag.addEventListener("click", function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      const name = (tag.textContent || "").replace(/^#/, "").trim();
+      const btn = Array.from(categoryBtns).find(function (b) {
+        return b.dataset.category === name;
+      });
+      if (btn) btn.click();
+    });
+  });
+
+  filterNotes();
 })();

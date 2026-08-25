@@ -295,6 +295,7 @@ a:hover { color: var(--accent-hover); }
   background: var(--bg);
   padding: 2px 8px;
   border-radius: 6px;
+  cursor: pointer;
 }
 
 /* ===== Post Page ===== */

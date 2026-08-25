@@ -23,15 +23,16 @@ permalink: /notes.html
 
   <div class="notes-grid">
     {% for post in site.posts %}
+    {% assign post_cat = post.categories | first | default: post.category %}
     <a href="{{ post.url | relative_url }}" class="note-card"
        data-title="{{ post.title }}"
        data-excerpt="{{ post.excerpt | strip_html }}"
        data-tags="{{ post.tags | join: ',' }}"
-       data-category="{{ post.category }}">
+       data-category="{{ post_cat }}">
       <div class="note-card-header">
         <time class="note-date">{{ post.date | date: "%Y-%m-%d" }}</time>
-        {% if post.category %}
-        <span class="note-category">{{ post.category }}</span>
+        {% if post_cat %}
+        <span class="note-category">{{ post_cat }}</span>
         {% endif %}
       </div>
       <h2>{{ post.title }}</h2>
@@ -45,6 +46,10 @@ permalink: /notes.html
       {% endif %}
     </a>
     {% endfor %}
+  </div>
+
+  <div id="filterEmpty" class="empty-state" hidden>
+    <p>这个分类下没有笔记</p>
   </div>
 
   {% if site.posts.size == 0 %}
