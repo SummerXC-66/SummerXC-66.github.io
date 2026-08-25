@@ -3,7 +3,7 @@ layout: post
 title: Cython 入门与计算加速
 date: 2026-08-24
 category: 编程
-tags: [Cython, Python, PyInstaller, 性能]
+tags: [编程]
 ---
 
 Cython 是快速生成 Python 扩展模块的工具，语法介于 Python 与 C 之间。计算遇到瓶颈时，不必整段用 C 重写，即可把 C 级速度嵌进现有 Python 程序。

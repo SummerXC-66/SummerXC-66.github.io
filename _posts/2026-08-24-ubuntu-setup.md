@@ -3,7 +3,7 @@ layout: post
 title: Ubuntu 环境配置与踩坑记录
 date: 2026-08-24
 category: 工具
-tags: [Ubuntu, CUDA, cuDNN, TensorRT, 驱动]
+tags: [工具]
 ---
 
 Windows + Ubuntu 双系统，侧重 Ubuntu 20.04：桌面、无线网、NVIDIA 驱动，以及 CUDA / cuDNN / TensorRT。

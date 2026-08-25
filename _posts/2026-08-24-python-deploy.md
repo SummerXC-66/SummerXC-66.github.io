@@ -3,7 +3,7 @@ layout: post
 title: Python 服务部署：Flask、Gunicorn、Nginx、Meinheld
 date: 2026-08-24
 category: 部署
-tags: [Python, Flask, Gunicorn, Nginx, Meinheld, 部署]
+tags: [部署]
 ---
 
 Ubuntu 上把 Flask 应用接到公网：Gunicorn 跑 WSGI，Nginx 做反代；高并发可换 Meinheld 协程 worker。环境曾是 Ubuntu 22.04 + Python 3.10。

@@ -2,8 +2,8 @@
 layout: post
 title: GitHub Pages 学习站部署与笔记添加指南
 date: 2026-07-12
-category: 工具
-tags: [GitHub Pages, Jekyll, Git, 部署, 工具文档]
+category: 部署
+tags: [部署]
 ---
 
 本文档记录本站的完整部署流程，以及日常添加、更新学习笔记的操作方法，方便日后查阅。
@@ -150,7 +150,7 @@ tags: [Python, 基础]
 | `category` | 推荐 | 分类，可选值见 `_config.yml` 中的 `category_list` |
 | `tags` | 可选 | 标签数组，支持首页搜索和筛选 |
 
-**可用分类：** 编程、算法、具身大模型算法、部署、工具、阅读、健康、其他
+**可用分类：** 编程、算法、具身大模型算法、部署、工具、阅读、健康
 
 ### 3.3 编写正文
 

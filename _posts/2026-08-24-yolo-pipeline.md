@@ -3,7 +3,7 @@ layout: post
 title: YOLO 训练与部署流水线
 date: 2026-08-24
 category: 编程
-tags: [YOLO, 目标检测, 标注, ONNX]
+tags: [编程]
 ---
 
 一键训练还没写成脚本，先按这五步补。

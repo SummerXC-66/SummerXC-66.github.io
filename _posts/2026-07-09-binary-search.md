@@ -3,7 +3,7 @@ layout: post
 title: 二分查找模板与常见变形
 date: 2026-07-09
 category: 算法
-tags: [二分查找, LeetCode]
+tags: [算法]
 ---
 
 二分查找是算法面试中的高频考点，掌握统一模板可以避免边界 bug。

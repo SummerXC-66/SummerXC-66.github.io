@@ -3,7 +3,7 @@ layout: post
 title: Python Socket 与异步 IO 笔记
 date: 2026-08-24
 category: 编程
-tags: [Python, Socket, asyncio, epoll, 粘包]
+tags: [编程]
 ---
 
 整理端口、Socket、asyncio / aiohttp，以及多客户端服务端相关笔记与资料。

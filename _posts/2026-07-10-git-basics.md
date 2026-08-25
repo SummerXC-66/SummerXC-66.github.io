@@ -3,7 +3,7 @@ layout: post
 title: Git 基础命令速查
 date: 2026-07-10
 category: 工具
-tags: [Git, 命令行]
+tags: [工具]
 ---
 
 整理常用的 Git 命令，方便日常查阅。

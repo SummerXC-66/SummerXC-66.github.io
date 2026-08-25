@@ -3,7 +3,7 @@ layout: post
 title: Docker 常用命令与踩坑记录
 date: 2026-08-24
 category: 工具
-tags: [Docker, 容器, PyTorch, WSL2, Samba, pip]
+tags: [工具]
 ---
 
 Windows / Ubuntu 上用 Docker 跑多版本 Python、PyTorch GPU 容器，以及内网 Samba、pip 镜像。

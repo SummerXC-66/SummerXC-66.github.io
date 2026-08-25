@@ -3,7 +3,7 @@ layout: post
 title: Chirp 信号与语谱图（specgram）示例
 date: 2026-08-24
 category: 算法
-tags: [EEG, 信号处理, MATLAB, Chirp, librosa]
+tags: [算法]
 ---
 
 用 MATLAB 生成 Chirp 扫频并画语谱图；后面是 Python 用 librosa / soundfile 读音频、重采样。采样点数 `N=1024`，采样率 `fs=1000` Hz。

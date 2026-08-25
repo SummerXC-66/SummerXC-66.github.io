@@ -3,7 +3,7 @@ layout: post
 title: 具身仿真：Isaac Sim、MuJoCo、Gazebo
 date: 2026-08-24
 category: 具身大模型算法
-tags: [Isaac Sim, Isaac Lab, MuJoCo, Gazebo, MoveIt, LeRobot, 仿真]
+tags: [具身大模型算法]
 ---
 
 具身策略要在仿真里采数据、验动作。三套常见栈：Isaac Sim（GPU 场景与训练）、MuJoCo（轻量物理 / 模仿学习）、Gazebo + MoveIt（ROS 2 机械臂）。
