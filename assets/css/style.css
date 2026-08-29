@@ -352,6 +352,13 @@ a:hover { color: var(--accent-hover); }
 
 .post-content p { margin-bottom: 16px; }
 
+.post-content .MathJax_Display,
+.post-content mjx-container {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
 .post-content ul, .post-content ol {
   margin: 0 0 16px 24px;
 }
