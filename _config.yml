@@ -28,6 +28,8 @@ navigation:
     url: /
   - title: 全部笔记
     url: /notes.html
+  - title: 知识图谱
+    url: /map.html
   - title: 关于
     url: /about.html
 

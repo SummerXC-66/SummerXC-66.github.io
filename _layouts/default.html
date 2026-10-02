@@ -5,10 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | truncate: 160 }}">
+  <meta name="theme-color" content="#eef2f6">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      var dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.setAttribute("data-theme", saved || (dark ? "dark" : "light"));
+    })();
+  </script>
   <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
       tex2jax: {
@@ -24,8 +32,11 @@
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a href="{{ '/' | relative_url }}" class="logo">
-        <span class="logo-icon">📚</span>
+      <a href="{{ '/' | relative_url }}" class="logo" aria-label="{{ site.title }}">
+        <svg class="logo-mark" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <rect class="mark-fill" x="2" y="2" width="24" height="24" rx="7" fill="currentColor" opacity="0.1"/>
+          <path d="M8 9.5h12M8 14h8M8 18.5h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
         <span class="logo-text">{{ site.title }}</span>
       </a>
       <nav class="nav">
@@ -33,7 +44,15 @@
         <a href="{{ item.url | relative_url }}" class="nav-link{% if page.url == item.url %} active{% endif %}">{{ item.title }}</a>
         {% endfor %}
       </nav>
-      <button class="theme-toggle" id="themeToggle" aria-label="切换主题">🌙</button>
+      <button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z"/>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+      </button>
     </div>
   </header>
 
@@ -43,8 +62,9 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>用 ❤️ 记录每一次学习 · {{ site.time | date: "%Y" }}</p>
-      <p class="footer-sub">基于 <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> 托管</p>
+      <p class="footer-brand">{{ site.title }}</p>
+      <p>记录每一次学习，沉淀可复用的知识</p>
+      <p class="footer-sub">{{ site.time | date: "%Y" }} · 托管于 <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a></p>
     </div>
   </footer>
 

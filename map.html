@@ -1,0 +1,210 @@
+---
+layout: default
+title: 知识图谱
+permalink: /map.html
+---
+
+<div class="container map-page">
+  <section class="page-intro">
+    <h1>学习之树</h1>
+    <p>从上往下长：先站稳，再搭环境，补工具与算法，最后长成具身 VLA 闭环</p>
+  </section>
+
+  <figure class="map-hero-fig">
+    <img src="{{ '/assets/img/learning-tree.jpg' | relative_url }}" alt="学习之树：从根基到具身 VLA 的连贯知识树" width="1200" height="1600" loading="eager">
+    <figcaption>一颗树 · 一条主干 · 自上而下阅读</figcaption>
+  </figure>
+
+  <section class="map-block">
+    <h2 class="section-title">可点击的学习树</h2>
+    <p class="map-desc">青绿方块是主干节点，按 ①→⑤ 顺序往下走；两侧叶子是该层要补的笔记，点即可打开。</p>
+    <div class="mermaid-wrap map-tree-wrap">
+      <pre class="mermaid">flowchart TB
+  ROOT["目标：跑通具身 VLA 闭环"]
+
+  ROOT --> S1
+  S1["① 站稳根基"]
+  S1 --- W["欢迎页"]
+  S1 --- DEP["本站部署"]
+  S1 --- HL["健康作息"]
+
+  S1 ==> S2
+  S2["② 工程环境"]
+  S2 --- UB["Ubuntu + CUDA"]
+  S2 --- DK["Docker"]
+  S2 --- GIT["Git"]
+  S2 --- ROS["ROS 2"]
+
+  S2 ==> S3
+  S3["③ 编程与部署"]
+  S3 --- SK["Socket / asyncio"]
+  S3 --- CY["Cython"]
+  S3 --- YO["YOLO"]
+  S3 --- FL["Flask / Nginx"]
+
+  S3 ==> S4
+  S4["④ 算法地基"]
+  S4 --- PR["先验 / 后验"]
+  PR --- FM["Flow Matching"]
+  PR --- PPO["PPO"]
+  S4 -.- BS["二分查找"]
+  S4 -.- CH["Chirp 语谱图"]
+  S4 -.- DH["数字全息"]
+
+  S4 ==> S5
+  S5["⑤ 具身主线"]
+  S5 --> ARCH["Brain–小脑–Agent"]
+  ARCH --> BRAIN["Brain：Qwen3-VL"]
+  ARCH --> CERE["小脑：RECAP"]
+  ARCH --> SIM["仿真 Isaac / MuJoCo"]
+  CERE --> CHUNK["Action Chunking"]
+  CHUNK --> RTC["RTC 异步执行"]
+  RTC --> ENDN["闭环跑通"]
+  BRAIN --> ENDN
+  SIM --> ENDN
+
+  click W "/notes/2026/07/11/welcome/"
+  click DEP "/notes/2026/07/12/deploy-and-notes-guide/"
+  click HL "/notes/2026/07/14/%E5%81%A5%E5%BA%B7%E4%BD%9C%E6%81%AF%E8%AE%A1%E5%88%92/"
+  click UB "/notes/2026/08/24/ubuntu-setup/"
+  click DK "/notes/2026/08/24/docker-notes/"
+  click GIT "/notes/2026/07/10/git-basics/"
+  click ROS "/notes/2026/08/24/ros2-notes/"
+  click SK "/notes/2026/08/24/python-socket-asyncio/"
+  click CY "/notes/2026/08/24/cython-notes/"
+  click YO "/notes/2026/08/24/yolo-pipeline/"
+  click FL "/notes/2026/08/24/python-deploy/"
+  click PR "/notes/2026/08/29/prior-posterior/"
+  click FM "/notes/2026/08/29/flow-matching/"
+  click PPO "/notes/2026/08/29/ppo/"
+  click BS "/notes/2026/07/09/binary-search/"
+  click CH "/notes/2026/08/24/eeg-chirp-specgram/"
+  click DH "/notes/2026/08/24/digital-holography/"
+  click ARCH "/notes/2026/08/26/brain-cerebellum-agent/"
+  click BRAIN "/notes/2026/08/24/qwen3-vl/"
+  click CERE "/notes/2026/08/24/pi06-recap/"
+  click CHUNK "/notes/2026/09/01/vla-action-chunk/"
+  click RTC "/notes/2026/09/01/vla-rtc/"
+  click SIM "/notes/2026/08/24/embodied-sim/"
+
+  classDef stage fill:#0f766e,stroke:#0d5f59,color:#fff,font-weight:bold
+  classDef leaf fill:#ecfdf5,stroke:#0f766e,color:#0b1320
+  classDef side fill:#f8fafc,stroke:#94a3b8,color:#64748b
+  classDef tip fill:#042f2e,stroke:#2dd4bf,color:#ecfdf5,font-weight:bold
+  classDef crown fill:#ccfbf1,stroke:#0f766e,color:#0b1320
+
+  class ROOT,ENDN tip
+  class S1,S2,S3,S4,S5 stage
+  class W,DEP,HL,UB,DK,GIT,ROS,SK,CY,YO,FL,PR,FM,PPO leaf
+  class BS,CH,DH side
+  class ARCH,BRAIN,CERE,CHUNK,RTC,SIM crown</pre>
+    </div>
+    <p class="map-tip">粗箭头 = 主干生长 · 细线 = 该层笔记 · 虚线 = 旁枝</p>
+  </section>
+
+  <section class="map-block">
+    <h2 class="section-title">顺着树干读</h2>
+    <ol class="map-path tree-path">
+      <li>
+        <span class="path-num">1</span>
+        <div>
+          <strong>站稳根基</strong>
+          <p>
+            <a href="{{ '/notes/2026/07/11/welcome/' | relative_url }}">欢迎页</a> →
+            <a href="{{ '/notes/2026/07/12/deploy-and-notes-guide/' | relative_url }}">本站部署</a> →
+            <a href="{{ '/notes/2026/07/14/%E5%81%A5%E5%BA%B7%E4%BD%9C%E6%81%AF%E8%AE%A1%E5%88%92/' | relative_url }}">健康作息</a>
+          </p>
+        </div>
+      </li>
+      <li>
+        <span class="path-num">2</span>
+        <div>
+          <strong>工程环境</strong>
+          <p>
+            <a href="{{ '/notes/2026/08/24/ubuntu-setup/' | relative_url }}">Ubuntu</a> →
+            <a href="{{ '/notes/2026/08/24/docker-notes/' | relative_url }}">Docker</a> →
+            <a href="{{ '/notes/2026/07/10/git-basics/' | relative_url }}">Git</a> →
+            <a href="{{ '/notes/2026/08/24/ros2-notes/' | relative_url }}">ROS 2</a>
+          </p>
+        </div>
+      </li>
+      <li>
+        <span class="path-num">3</span>
+        <div>
+          <strong>编程与部署</strong>
+          <p>
+            <a href="{{ '/notes/2026/08/24/python-socket-asyncio/' | relative_url }}">Socket / 异步</a> →
+            <a href="{{ '/notes/2026/08/24/cython-notes/' | relative_url }}">Cython</a> →
+            <a href="{{ '/notes/2026/08/24/yolo-pipeline/' | relative_url }}">YOLO</a> →
+            <a href="{{ '/notes/2026/08/24/python-deploy/' | relative_url }}">Flask 部署</a>
+          </p>
+        </div>
+      </li>
+      <li>
+        <span class="path-num">4</span>
+        <div>
+          <strong>算法地基</strong>
+          <p>
+            <a href="{{ '/notes/2026/08/29/prior-posterior/' | relative_url }}">先验后验</a> →
+            <a href="{{ '/notes/2026/08/29/flow-matching/' | relative_url }}">Flow Matching</a> +
+            <a href="{{ '/notes/2026/08/29/ppo/' | relative_url }}">PPO</a>
+            <span class="path-side">旁枝</span>
+            <a href="{{ '/notes/2026/07/09/binary-search/' | relative_url }}">二分</a> ·
+            <a href="{{ '/notes/2026/08/24/eeg-chirp-specgram/' | relative_url }}">Chirp</a> ·
+            <a href="{{ '/notes/2026/08/24/digital-holography/' | relative_url }}">全息</a>
+          </p>
+        </div>
+      </li>
+      <li>
+        <span class="path-num">5</span>
+        <div>
+          <strong>具身主线 · 长成树冠</strong>
+          <p>
+            <a href="{{ '/notes/2026/08/26/brain-cerebellum-agent/' | relative_url }}">分层架构</a> →
+            <a href="{{ '/notes/2026/08/24/qwen3-vl/' | relative_url }}">Qwen3-VL</a> +
+            <a href="{{ '/notes/2026/08/24/pi06-recap/' | relative_url }}">RECAP</a> →
+            <a href="{{ '/notes/2026/09/01/vla-action-chunk/' | relative_url }}">Action Chunk</a> →
+            <a href="{{ '/notes/2026/09/01/vla-rtc/' | relative_url }}">RTC</a> →
+            <a href="{{ '/notes/2026/08/24/embodied-sim/' | relative_url }}">仿真</a>
+          </p>
+        </div>
+      </li>
+    </ol>
+  </section>
+</div>
+
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+
+  const dark = document.documentElement.getAttribute("data-theme") === "dark";
+
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: "base",
+    securityLevel: "loose",
+    themeVariables: {
+      primaryColor: dark ? "#134e4a" : "#ccfbf1",
+      primaryTextColor: dark ? "#e8edf5" : "#0b1320",
+      primaryBorderColor: dark ? "#2dd4bf" : "#0f766e",
+      lineColor: dark ? "#2dd4bf" : "#0f766e",
+      secondaryColor: dark ? "#1a2230" : "#e8edf3",
+      tertiaryColor: dark ? "#121822" : "#ffffff",
+      background: "transparent",
+      mainBkg: dark ? "#121822" : "#ffffff",
+      nodeBorder: dark ? "#2dd4bf" : "#0f766e",
+      clusterBkg: dark ? "rgba(45,212,191,0.08)" : "rgba(15,118,110,0.06)",
+      titleColor: dark ? "#e8edf5" : "#0b1320",
+      edgeLabelBackground: dark ? "#121822" : "#ffffff",
+      fontFamily: "Noto Sans SC, sans-serif",
+    },
+    flowchart: {
+      curve: "basis",
+      padding: 18,
+      nodeSpacing: 24,
+      rankSpacing: 40,
+      htmlLabels: true,
+    },
+  });
+
+  await mermaid.run({ querySelector: ".mermaid" });
+</script>

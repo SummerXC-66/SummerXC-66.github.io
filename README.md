@@ -79,13 +79,13 @@ bundle exec jekyll serve
 
 笔记：[PPO 算法](_posts/2026-08-29-ppo.md)。网络定义来自 [Super-mario-bros-PPO-pytorch](https://github.com/vietnh1009/Super-mario-bros-PPO-pytorch) 的 `src/model.py`。
 
-**作用：** 这是 Actor-Critic，看马里奥画面，同时做两件事——决定按哪个键（策略），以及估计这屏值多少分（价值）。采集时用它进关；更新时用新旧输出算概率比、GAE 和损失。没有这个网络，PPO 没有策略可改，也没有基线可减。
+**作用：** 这是 Actor-Critic，看马里奥画面，同时做两件事——决定按哪个键（策略），以及估计这屏值多少分（价值）。采集时用它进关；更新时用新旧输出算概率比、优势 A 和损失。没有这个网络，PPO 没有策略可改，也没有基线可减。
 
 | 部分 | 作用 |
 |------|------|
 | 四层 CNN + Linear 512 | 从 4 帧画面抽出「马里奥在哪、前面有没有坑/怪」 |
 | actor 头 | 输出各按键 logits → softmax 成 π(a\|s)，采样、算 log-prob 和 clip 比值 |
-| critic 头 | 输出标量 V(s)，给 GAE 打优势、给价值损失当预测 |
+| critic 头 | 输出标量 V(s)，算优势 A = G − V，并给价值损失当预测 |
 | 共享骨干 | 两个头看同一套视觉特征，省参数，策略和价值对画面的理解一致 |
 
 输入是叠好的 4 帧灰度图，形状 `(B, 4, 84, 84)`。四层 CNN 抽特征后分成两个头。
@@ -130,4 +130,4 @@ class PPO(nn.Module):
         return self.actor_linear(x), self.critic_linear(x)
 ```
 
-`forward` 返回 `(logits, value)`。训练时用 `Categorical(logits=logits)` 采样按键，并算 `log_prob`；`value` 给 GAE 和价值损失用。卷积核 3、stride 2、padding 1，84×84 四次下采样后是 6×6，所以全连接入口是 `32 * 6 * 6`。
+`forward` 返回 `(logits, value)`。训练时用 `Categorical(logits=logits)` 采样按键，并算 `log_prob`；`value` 用来算优势 A 和价值损失。卷积核 3、stride 2、padding 1，84×84 四次下采样后是 6×6，所以全连接入口是 `32 * 6 * 6`。

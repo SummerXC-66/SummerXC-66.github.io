@@ -5,19 +5,23 @@ permalink: /notes.html
 ---
 
 <div class="container">
-  <section class="hero" style="padding-top: 20px;">
-    <h1 style="font-size: 1.8rem;">全部笔记</h1>
-    <p>浏览所有学习记录</p>
+  <section class="page-intro">
+    <h1>全部笔记</h1>
+    <p>按分类浏览，或用关键词快速定位</p>
   </section>
 
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="搜索笔记..." autocomplete="off">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="11" cy="11" r="7"/>
+      <path d="M20 20l-3.5-3.5"/>
+    </svg>
+    <input type="text" id="searchInput" placeholder="搜索笔记..." autocomplete="off" aria-label="搜索笔记">
   </div>
 
-  <div class="categories">
-    <button class="category-btn active" data-category="all">全部</button>
+  <div class="categories" role="group" aria-label="分类筛选">
+    <button class="category-btn active" data-category="all" type="button">全部</button>
     {% for cat in site.category_list %}
-    <button class="category-btn" data-category="{{ cat }}">{{ cat }}</button>
+    <button class="category-btn" data-category="{{ cat }}" type="button">{{ cat }}</button>
     {% endfor %}
   </div>
 
@@ -30,7 +34,7 @@ permalink: /notes.html
        data-tags="{{ post.tags | join: ',' }}"
        data-category="{{ post_cat }}">
       <div class="note-card-header">
-        <time class="note-date">{{ post.date | date: "%Y-%m-%d" }}</time>
+        <time class="note-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y.%m.%d" }}</time>
         {% if post_cat %}
         <span class="note-category">{{ post_cat }}</span>
         {% endif %}
@@ -54,7 +58,6 @@ permalink: /notes.html
 
   {% if site.posts.size == 0 %}
   <div class="empty-state">
-    <div class="emoji">📝</div>
     <p>暂无笔记</p>
   </div>
   {% endif %}

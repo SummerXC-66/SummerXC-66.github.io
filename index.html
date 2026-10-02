@@ -4,29 +4,32 @@ title: 首页
 ---
 
 <section class="hero">
-  <h1>我的学习记录</h1>
-  <p>记录每一次学习的收获与思考，沉淀知识，方便随时回顾</p>
-  <div class="hero-stats">
-    <div class="stat">
-      <span class="stat-num">{{ site.posts.size }}</span>
-      <span class="stat-label">篇笔记</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">{{ site.category_list.size }}</span>
-      <span class="stat-label">个分类</span>
-    </div>
+  <h1 class="hero-brand">{{ site.title }}</h1>
+  <p class="hero-lead">{{ site.description }}</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="#notes">浏览笔记</a>
+    <a class="btn btn-ghost" href="{{ '/about.html' | relative_url }}">关于本站</a>
   </div>
 </section>
 
-<div class="container">
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="搜索笔记标题、内容或标签..." autocomplete="off">
+<div class="container" id="notes">
+  <div class="section-head">
+    <h2 class="section-title">最近笔记</h2>
+    <span class="section-meta">{{ site.posts.size }} notes</span>
   </div>
 
-  <div class="categories">
-    <button class="category-btn active" data-category="all">全部</button>
+  <div class="search-bar">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="11" cy="11" r="7"/>
+      <path d="M20 20l-3.5-3.5"/>
+    </svg>
+    <input type="text" id="searchInput" placeholder="搜索标题、内容或标签..." autocomplete="off" aria-label="搜索笔记">
+  </div>
+
+  <div class="categories" role="group" aria-label="分类筛选">
+    <button class="category-btn active" data-category="all" type="button">全部</button>
     {% for cat in site.category_list %}
-    <button class="category-btn" data-category="{{ cat }}">{{ cat }}</button>
+    <button class="category-btn" data-category="{{ cat }}" type="button">{{ cat }}</button>
     {% endfor %}
   </div>
 
@@ -40,7 +43,7 @@ title: 首页
        data-category="{{ post_cat }}"
        data-recent="{% if forloop.index <= 6 %}1{% else %}0{% endif %}">
       <div class="note-card-header">
-        <time class="note-date">{{ post.date | date: "%Y-%m-%d" }}</time>
+        <time class="note-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y.%m.%d" }}</time>
         {% if post_cat %}
         <span class="note-category">{{ post_cat }}</span>
         {% endif %}
@@ -63,14 +66,17 @@ title: 首页
   </div>
 
   {% if site.posts.size > 6 %}
-  <div id="viewAllNotes" style="text-align: center; margin-top: 40px;">
-    <a href="{{ '/notes.html' | relative_url }}" style="font-weight: 500;">查看全部笔记 →</a>
+  <div id="viewAllNotes" class="view-all-wrap">
+    <a href="{{ '/notes.html' | relative_url }}" class="view-all">查看全部笔记 →</a>
   </div>
   {% endif %}
 
   {% if site.posts.size == 0 %}
   <div class="empty-state">
-    <div class="emoji">📝</div>
+    <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/>
+      <path d="M14 3v5h5M9 13h6M9 17h4"/>
+    </svg>
     <p>还没有笔记，在 <code>_posts/</code> 目录下创建 Markdown 文件即可开始记录</p>
   </div>
   {% endif %}
